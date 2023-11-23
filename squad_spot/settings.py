@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 
 import environ
+import dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -99,6 +100,7 @@ AUTH_USER_MODEL = "user.User"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+"""
 DATABASES = {
     "default": env.db(),  # Looks for DATABASE_URL in environment file,
     # 'default': {
@@ -112,6 +114,21 @@ DATABASES = {
     },
 }
 
+"""
+DATABASES = {
+    "default": dj_database_url.parse(
+        env("DATABASE_URL")
+    ),  # Looks for DATABASE_URL in environment file,
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # },
+    "TEST": {
+        # testing database customization here
+        "NAME": "test_squad_spot",
+        # some other customization, for example the user user, password, etc
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
